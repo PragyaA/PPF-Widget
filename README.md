@@ -1,6 +1,8 @@
-angular-seed, a widget that takes amount and frequency from user input and shows the amount incremented per year in form of a histogram.
+angular-seed
+A widget that takes amount and frequency from user input and shows the amount incremented per year in form of a histogram.
 
-App written using angular.js and d3.js.
+Details:
+written using angular.js and d3.js.
 requires node 4.2.0 or later
 
 
