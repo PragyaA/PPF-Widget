@@ -1,0 +1,207 @@
+var stackedChart = {
+	init: function(){
+
+		var that = this;
+	
+
+		var margin = {top: 20, right: 20, bottom: 90, left: 40},
+			width = 240 - margin.left - margin.right,
+			height = 300 - margin.top - margin.bottom;
+
+		var x = d3.scale.ordinal()
+			.rangeRoundBands([0, width], .1);
+
+		var y = d3.scale.linear()
+			.rangeRound([height, 0]);
+
+		var color = d3.scale.ordinal()
+			.range(["#20b2aa", "#00bfff", "#dc143c", "#87cefa", "#90ee90", "#add8e6", "#d3d3d3"]);
+
+		var xAxis = d3.svg.axis()
+			.scale(x)
+			.orient("bottom");
+
+		var yAxis = d3.svg.axis()
+			.scale(y)
+			.orient("left")
+			//.tickFormat(d3.format(".2s"));
+
+		var svg = d3.select("#chart")
+			.append("svg")
+				.attr("class", "chart")
+				.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		var legendholder = d3.select("#chart")
+			.append("svg")
+				.attr("class", "legend")				
+				.attr("width", "300")
+				.attr("height", "300")			
+			
+			that.getRawData(function(data){
+					  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Label"; }));
+
+					  data.forEach(function(d) {
+						var y0 = 0;
+						d.ages = color.domain().map(function(name) {
+							return {name: name, hours: d[name], y0: y0, y1: y0 += +d[name]}; 
+						});
+						d.total = d.ages[d.ages.length - 1].y1;
+					  });
+
+					  //data.sort(function(a, b) { return b.total - a.total; });
+
+					  x.domain(data.map(function(d) { return d.Label; }));
+					  y.domain([0, d3.max(data, function(d) { return d.total; })]);
+
+					  var chart = svg.append("g")
+						  .attr("class", "chart")
+						.attr("width", 500)	;					  
+					  
+					  
+					  chart.append("g")
+						  .attr("class", "x axis")
+						  .attr("transform", "translate(0," + height + ")")
+						  .call(xAxis);
+
+					  chart.append("g")
+						  .attr("class", "y axis")
+						  .call(yAxis)
+						  .append("text")
+						  .attr("transform", "rotate(-90)")
+						  .attr("y", 6)
+						  .attr("dy", "-3.5em")
+						  .style("text-anchor", "end")
+						  .text("Amount");
+
+						var xlabels = chart.selectAll(".x.axis text")  
+							.attr("transform", "rotate(-30) translate(-10,10)")
+						  
+					  var state = chart.selectAll(".state")
+						  .data(data)
+						.enter().append("g")
+						  .attr("class", "g")
+						  .attr("x", function(d) { return x(d.Label); })
+						  .attr("transform", function(d) { 
+							return "translate(" + x(d.Label) + ",0)"; }
+						  );
+						  
+
+					  state.selectAll("rect")
+							.data(function(d) {
+								return d.ages; 
+							})
+						.enter().append("rect")
+							.attr("width", x.rangeBand())					  
+							.attr("y", function(d) { return y(d.y1); })
+							.attr("height", function(d) { return y(d.y0) - y(d.y1); })
+							.style("fill", function(d) { return color(d.name); })//;
+						  
+							.on("mouseover", function(d) {
+								//Get this bar's x/y values, then augment for the tooltip
+								
+								var xPosition = parseFloat(d3.select(this.parentNode).attr("x")) + (x.rangeBand() / 2) + 50;
+								var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + height / 2;
+
+								//Update the tooltip position and value
+								d3.select("#tooltip")
+									.style("left", xPosition + "px")
+									.style("top", yPosition + "px")						
+									.select("#value")
+									.text(d.name +" : " + d.hours);
+
+								//Show the tooltip
+								d3.select("#tooltip").classed("hidden", false);
+							})
+						   .on("mouseout", function() {
+						   
+								//Hide the tooltip
+								d3.select("#tooltip").classed("hidden", true);
+								
+						   })	   
+						  
+						  
+					var legends = legendholder.append("g")
+						.attr("class", "legends")
+						.attr("transform", "translate(60,0)");									
+
+					  var legend = legends.selectAll(".legend")
+						  .data(color.domain().slice().reverse())
+						  .enter().append("g")
+						  .attr("class", "legend")
+						  .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+					  legend.append("rect")
+						  .attr("x", width - 18)
+						  .attr("width", 18)
+						  .attr("height", 18)
+						  .style("fill", color);
+
+					  legend.append("text")
+						  .attr("x", width - 24)
+						  .attr("y", 9)
+						  .attr("dy", ".35em")
+						  .style("text-anchor", "end")
+						  .text(function(d) { return d; });
+
+			});
+
+	},
+	getRawData: function(callback){
+	
+			
+		var data = [
+				{
+					"label1" : "10000",
+					"label3" : "0",
+					"label2" : "810",
+					"Label" : "Year1"
+				},		
+				{
+					"label1" : "20000",
+					"label3" : "0",
+					"label2" : "2496",
+					"Label" : "Year2"
+				},
+				{
+					"label1" : "30000",
+					"label3" : "0",
+					"label2" : "5128",
+					"Label" : "Year3"
+				},	
+				{
+					"label1" : "40000",
+					"label3" : "0",
+					"label2" : "8783",
+					"Label" : "Year1"
+				},		
+				{
+					"label1" : "50000",
+					"label3" : "0",
+					"label2" : "19502",
+					"Label" : "Year2"
+				},
+				{
+					"label1" : "60000",
+					"label3" : "0",
+					"label2" : "19502",
+					"Label" : "Year3"
+				}	
+			];
+			
+			
+		
+		function datesort(a, b) {
+			return new Date(a.Label).getTime() - new Date(b.Label).getTime();
+		}
+		data.sort(datesort);
+			
+		callback(data);
+	}	
+}
+
+
+
+stackedChart.init();

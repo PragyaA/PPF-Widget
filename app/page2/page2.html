@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="firstApplication" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="../bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="page2.css">
+  <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css">
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+  <script src="../bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  <script
+    src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+</head>
+<body>
+  <div ng-cloak>
+      <div layout="row"><p class="md-flex detail"><b>Maturity Amount : &nbsp </b></p>
+      <p padding-left="10px">Rs. {maturity amount}</p></div>
+      <div layout="row"><p class="md-flex detail"><b>Interest Earned : &nbsp</b></p>
+      <p  padding-left="10px">Rs. {interest}</p></div>
+      
+      <!-- <table>
+        <tr ng-repeat="x in names">
+          <td>{{ x.Year }}</td>
+          <td>{{ x.Deposit }}</td>
+          <td>{{ x.Balance }}</td>
+          <td>{{ x.Interest }}</td>
+        </tr>
+      </table> -->
+      <table>
+      <th colspan="4"> Yearly PF balance and interest</th>
+        <tr>
+          <th>Year</th>
+          <th>Deposit</th> 
+          <th>Balance</th>
+          <th>Interest</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>{deposit}</td> 
+          <td>{balance}</td>
+          <td>{interest}</td>
+        </tr>
+      </table>
+
+      <svg class="chart" id="chart"></svg>
+
+<!--       <div id="chart" class="stackedchart"></div>
+ -->
+
+</div>
+  </div>
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/angular-route/angular-route.js"></script>
+  <!-- <script src="single.js"></script> -->
+  <!-- <script src="x.js"></script> -->
+  <script src="page2.js"></script>
+  <script src="../components/version/version.js"></script>
+  <script src="../components/version/version-directive.js"></script>
+  <script src="../components/version/interpolate-filter.js"></script>
+</body>
+</html>

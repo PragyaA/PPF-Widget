@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="firstApplication" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  <script
+    src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+</head>
+<body>
+<div ng-controller="TestCtrl">
+  <div class="menu" >Calculate your PPF Maturity Amount</div>
+      <div id="inputContainer" class="inputDemo" ng-cloak>
+         <md-content layout-padding>
+            <form name="projectForm">
+               <md-input-container class="md-block">
+                  <label>Deposit Amount</label>
+                  <input required name="depositAmount" ng-model="project.depositAmount">
+                  <div ng-messages="projectForm.depositAmount.$error">
+                     <div ng-message="required">This is required.</div>
+                  </div>
+               </md-input-container>
+               <md-input-container class="md-block" >
+                  <label>Frequency</label>
+                  <md-select ng-model="ctrl.userState">
+                     <md-option value="Monthly"><em>Monthly</em></md-option>
+                     <md-option value="Weekly"><em>Weekly</em></md-option>
+                  </md-select>
+               </md-input-container>
+               </form>
+         </md-content>
+      </div>
+      <div layout="row" layout-align="center">
+      <md-button class="md-raised md-primary btn1" ng-click="calculate();"> Calculate </md-button>
+      </div>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+  <script src="components/version/version.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script>
+  </div>
+</body>
+</html>
